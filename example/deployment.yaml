@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+        - name: sleep
+          image: tutum/curl
+          command: ["/bin/sleep","infinity"]
+        - name: sidecar
+          image: nginx
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 30
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: testyjob
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - name: sleep
+        image: tutum/curl
+        command: ["/bin/sleep","60"]
+      - name: sidecar
+        image: nginx
+      restartPolicy: Never
