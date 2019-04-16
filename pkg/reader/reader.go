@@ -17,13 +17,13 @@ import (
 func ReadFile(file string) ([]runtime.Object, error) {
 	// Build a yaml decoder with the unstructured Scheme
 	yamlDecoder := yaml.NewDecodingSerializer(unstructured.UnstructuredJSONScheme)
-	bytess, err := ioutil.ReadFile("deployment.yaml")
+	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		return nil, fmt.Errorf("unable to read config file: %v", err)
 	}
 	// Parse the objects from the yaml
 	var objects []runtime.Object
-	reader := json.YAMLFramer.NewFrameReader(ioutil.NopCloser(bytes.NewReader(bytess)))
+	reader := json.YAMLFramer.NewFrameReader(ioutil.NopCloser(bytes.NewReader(data)))
 	d := streaming.NewDecoder(reader, yamlDecoder)
 	for {
 		obj, _, err := d.Decode(nil, nil)

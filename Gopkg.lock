@@ -744,6 +744,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/ghodss/yaml",
+    "github.com/kubernetes-sigs/federation-v2/pkg/controller/util",
     "github.com/kubernetes-sigs/federation-v2/pkg/kubefed2/enable",
     "github.com/kubernetes-sigs/federation-v2/pkg/kubefed2/federate",
     "github.com/kubernetes/repo-infra/verify/boilerplate/test",
