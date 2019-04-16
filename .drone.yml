@@ -1,0 +1,24 @@
+workspace:
+  base: /go
+  path: src/github.com/uswitch/fed-convert
+
+pipeline:
+  test:
+    image: golang:1.12
+    commands:
+      - go test -v -cover $(go list ./... | grep -v /vendor)
+
+  build:
+    image: golang:1.12
+    commands:
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o bin/fed-convert-linux-amd64
+      - GOOS=darwin GOARCH=amd64  go build -o bin/fed-convert-darwin-amd64
+
+  publish_release:
+    image: plugins/github-release
+    secrets: [ github_token ]
+    files:
+      - bin/fed-convert-linux-amd64
+      - bin/fed-convert-darwin-amd64
+    when:
+      event: tag
