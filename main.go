@@ -22,8 +22,8 @@ var (
 func main() {
 	flag.StringVar(&kubeConfig, "kube-config", "", "Path to kubeconfig file")
 	flag.StringVar(&file, "file", "", "Path to file to be converted")
-	flag.StringVar(&fileOut, "ouput-file", "", "Output file path, defaults to filename.out")
-	flag.StringVar(&clusters, "clusters", "blue,red,black", "clusters to deploy to")
+	flag.StringVar(&fileOut, "output-file", "", "Output file path, defaults to filename.out")
+	flag.StringVar(&clusters, "clusters", "clusterA,clusterB,clusterC", "clusters to deploy to")
 	flag.Parse()
 
 	if fileOut == "" {
